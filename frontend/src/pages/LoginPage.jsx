@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { LogIn, Mail, Lock, ArrowRight, Loader } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore.js";
+import { toast } from "react-hot-toast";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
