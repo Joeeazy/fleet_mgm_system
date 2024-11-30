@@ -12,7 +12,7 @@ const router = express.Router();
 router.get("/", getVehicles);
 
 router.post(
-  "/",
+  "/vehicle",
   [
     body("name").notEmpty().trim(),
     body("location").notEmpty(),
