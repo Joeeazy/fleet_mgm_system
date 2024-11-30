@@ -22,7 +22,7 @@ export function AddVehicleForm({ onAdd }) {
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
         <CarFront /> Add New Vehicle
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 text-gray-950">
         <div className="grid gap-4 md:grid-cols-2">
           <Input name="name" placeholder="Vehicle Name" required />
           <Input name="location" placeholder="Current Location" required />
