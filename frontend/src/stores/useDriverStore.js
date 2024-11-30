@@ -36,7 +36,7 @@ export const useDriverStore = create((set) => ({
   updateDriverStatus: async (id, status) => {
     set({ loading: true, error: null });
     try {
-      await axios.patch(`/drivers/${id}/${status}`);
+      await axios.patch(`/drivers/${id}`, { status });
 
       set((state) => ({
         drivers: state.drivers.map((d) => (d.id === id ? { ...d, status } : d)),

@@ -20,23 +20,32 @@ export const useVehicleStore = create((set) => ({
   addVehicle: async (vehicle) => {
     set({ loading: true, error: null });
     try {
-      const newVehicle = await axios.post({
+      const response = await axios.post(`/vehicles/${vehicle}`, {
         ...vehicle,
-        status: VehicleStatus.ACTIVE,
+        status: VehicleStatus.ACTIVE, // Adding the status field
       });
+
+      const newVehicle = response.data; // Extracting the vehicle from the response
+
       set((state) => ({
-        vehicles: [...state.vehicles, newVehicle],
+        vehicles: [...state.vehicles, newVehicle], // Adding the new vehicle to the state
         loading: false,
       }));
     } catch (error) {
-      set({ error: error.message, loading: false });
+      set({
+        error: error.response?.data?.message || error.message, // Handling error messages
+        loading: false,
+      });
     }
   },
 
   updateVehicleStatus: async (id, status) => {
     set({ loading: true, error: null });
     try {
-      await axios.patch(`/vehicles/${id}/${status}`);
+      // Make the request to the backend
+      await axios.patch(`/vehicles/${id}`, { status });
+
+      // Update the state
       set((state) => ({
         vehicles: state.vehicles.map((v) =>
           v.id === id ? { ...v, status } : v
@@ -44,7 +53,11 @@ export const useVehicleStore = create((set) => ({
         loading: false,
       }));
     } catch (error) {
-      set({ error: error.message, loading: false });
+      // Handle errors
+      set({
+        error: error.response?.data?.message || error.message,
+        loading: false,
+      });
     }
   },
 
