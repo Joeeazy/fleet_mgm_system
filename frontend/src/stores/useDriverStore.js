@@ -1,52 +1,34 @@
-// import { create } from "zustand";
-// import axios from "../lib/axios";
-
-// export const useDriverStore = create((set) => ({
-//   drivers: [],
-
-//   loading: false,
-
-//   setDrivers: (drivers) => set({ drivers }),
-
-//   createDriver: async (driverData) => {
-//     set({ loading: true });
-
-//     try {
-//       const res = await axios.post("/drivers");
-//     } catch (error) {}
-//   },
-// }));
 import { create } from "zustand";
 import axios from "../lib/axios";
-import { DriverStatus } from "../types";
+import toast from "react-hot-toast";
 
 export const useDriverStore = create((set) => ({
   drivers: [],
   loading: false,
   error: null,
 
-  loadDrivers: async () => {
+  fetchAllDrivers: async () => {
     set({ loading: true, error: null });
     try {
-      const drivers = await api.getDrivers();
-      set({ drivers, loading: false });
+      const response = await axios.get("/drivers");
+      set({ drivers: response.data.drivers, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
+      toast.error(error.response.data.error || "Failed to fetch Products");
     }
   },
 
-  addDriver: async (driver) => {
+  addDriver: async (driverData) => {
     set({ loading: true, error: null });
     try {
-      const newDriver = await api.addDriver({
-        ...driver,
-        status: DriverStatus.AVAILABLE,
-      });
-      set((state) => ({
-        drivers: [...state.drivers, newDriver],
+      const response = await axios.post("/drivers", driverData);
+
+      set((prevState) => ({
+        drivers: [...state.drivers, res.data],
         loading: false,
       }));
     } catch (error) {
+      toast.error(error.response.data.error);
       set({ error: error.message, loading: false });
     }
   },
@@ -54,7 +36,8 @@ export const useDriverStore = create((set) => ({
   updateDriverStatus: async (id, status) => {
     set({ loading: true, error: null });
     try {
-      await api.updateDriverStatus(id, status);
+      await axios.patch(`/drivers/${id}/${status}`);
+
       set((state) => ({
         drivers: state.drivers.map((d) => (d.id === id ? { ...d, status } : d)),
         loading: false,
@@ -67,9 +50,10 @@ export const useDriverStore = create((set) => ({
   deleteDriver: async (id) => {
     set({ loading: true, error: null });
     try {
-      await api.deleteDriver(id);
-      set((state) => ({
-        drivers: state.drivers.filter((d) => d.id !== id),
+      await axios.delete(`/drivers/${id}`);
+
+      set((prevDrivers) => ({
+        drivers: prevDrivers.drivers.filter((driver) => driver._id !== id),
         loading: false,
       }));
     } catch (error) {
