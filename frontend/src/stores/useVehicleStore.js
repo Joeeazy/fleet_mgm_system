@@ -7,11 +7,11 @@ export const useVehicleStore = create((set) => ({
   loading: false,
   error: null,
 
-  loadVehicles: async () => {
+  fetchAllVehicles: async () => {
     set({ loading: true, error: null });
     try {
-      const vehicles = await api.getVehicles();
-      set({ vehicles, loading: false });
+      const response = await axios.get("/vehicles");
+      set({ vehicles: response.data.vehicles, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
     }
@@ -20,7 +20,7 @@ export const useVehicleStore = create((set) => ({
   addVehicle: async (vehicle) => {
     set({ loading: true, error: null });
     try {
-      const newVehicle = await api.addVehicle({
+      const newVehicle = await axios.post({
         ...vehicle,
         status: VehicleStatus.ACTIVE,
       });
@@ -36,7 +36,7 @@ export const useVehicleStore = create((set) => ({
   updateVehicleStatus: async (id, status) => {
     set({ loading: true, error: null });
     try {
-      await api.updateVehicleStatus(id, status);
+      await axios.patch(`/vehicles/${id}/${status}`);
       set((state) => ({
         vehicles: state.vehicles.map((v) =>
           v.id === id ? { ...v, status } : v
@@ -51,7 +51,8 @@ export const useVehicleStore = create((set) => ({
   deleteVehicle: async (id) => {
     set({ loading: true, error: null });
     try {
-      await api.deleteVehicle(id);
+      await axios.delete(`/vehicles/${id}`);
+
       set((state) => ({
         vehicles: state.vehicles.filter((v) => v.id !== id),
         loading: false,

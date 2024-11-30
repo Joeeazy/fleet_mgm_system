@@ -24,7 +24,7 @@ export const useDriverStore = create((set) => ({
       const response = await axios.post("/drivers", driverData);
 
       set((prevState) => ({
-        drivers: [...state.drivers, res.data],
+        drivers: [...prevState.drivers, response.data],
         loading: false,
       }));
     } catch (error) {
