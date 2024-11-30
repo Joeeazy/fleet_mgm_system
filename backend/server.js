@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(cors());
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json()); // Make sure this line is included
 app.use("/api/auth", authRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/drivers", driverRoutes);
