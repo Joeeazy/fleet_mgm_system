@@ -1,12 +1,12 @@
 import React from "react";
-import { Dashboard } from "../components/Dashboard";
+import { Hero } from "../components/Hero";
 import { Navbar } from "../components/Navbar";
 
 export default function HomePage() {
   return (
     <div>
       <Navbar />
-      <Dashboard />
+      <Hero />
     </div>
   );
 }
