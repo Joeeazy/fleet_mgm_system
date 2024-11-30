@@ -12,7 +12,6 @@ export default function HomePage() {
       <Hero />
       <AddDriverForm />
       <AddVehicleForm />
-      {/* <DriverCard /> */}
     </div>
   );
 }
