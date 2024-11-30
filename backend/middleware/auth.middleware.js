@@ -3,15 +3,15 @@ import User from "../models/user.model.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    //check if user is authenticated using access token from the cookies
-    const accessToken = req.cookies.accessToken;
+    // //check if user is authenticated using access token from the cookies
+    // const accessToken = req.cookies.accessToken;
 
-    //if it doesnt exist
-    if (!accessToken) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized - No Token provided" });
-    }
+    // //if it doesnt exist
+    // if (!accessToken) {
+    //   return res
+    //     .status(401)
+    //     .json({ message: "Unauthorized - No Token provided" });
+    // }
 
     //if it exists
     try {

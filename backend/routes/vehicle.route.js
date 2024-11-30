@@ -3,6 +3,7 @@ import {
   getVehicles,
   addVehicle,
   updateVehicleStatus,
+  deleteVehicle,
 } from "../controllers/vehicle.controller.js";
 import { body } from "express-validator";
 
@@ -26,5 +27,7 @@ router.patch(
   body("status").isIn(["Active", "Maintenance", "Out of Service"]),
   updateVehicleStatus
 );
+
+router.delete("/:id", deleteVehicle);
 
 export default router;

@@ -48,3 +48,26 @@ export const updateDriverStatus = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const deleteDriver = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const driver = await Driver.findById(id);
+
+    if (!driver) {
+      return res.status(404).json({ message: "Driver not found" });
+    }
+
+    // Check if driver is currently assigned to a vehicle
+    if (driver.currentVehicle) {
+      return res.status(400).json({
+        message: "Cannot delete driver while assigned to a vehicle",
+      });
+    }
+
+    await Driver.findByIdAndDelete(id);
+    res.json({ message: "Driver deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
