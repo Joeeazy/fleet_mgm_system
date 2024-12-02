@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
-import { VehicleStatus } from "../types";
+import { VehicleStatus } from "../components/ui/Types";
 
 export const useVehicleStore = create((set) => ({
   vehicles: [],

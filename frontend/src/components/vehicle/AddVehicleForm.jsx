@@ -1,7 +1,7 @@
 import { CarFront } from "lucide-react";
-import { Card } from "./Card";
-import { Input } from "./Input";
-import { Button } from "./Button";
+import { Card } from "../ui/Card";
+import { Input } from "../ui/Input";
+import { Button } from "../ui/Button";
 
 export function AddVehicleForm({ onAdd }) {
   const handleSubmit = (e) => {

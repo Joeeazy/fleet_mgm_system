@@ -1,5 +1,5 @@
-import { StatusColors } from "../../types";
-import { useVehicleStore } from "../../store/useVehicleStore";
+import { StatusColors } from "../ui/Types";
+import { useVehicleStore } from "../../stores/useVehicleStore";
 
 const VehicleListItem = ({ vehicle }) => {
   const { updateVehicleStatus, deleteVehicle } = useVehicleStore();
@@ -15,33 +15,32 @@ const VehicleListItem = ({ vehicle }) => {
   };
 
   return (
-    <li className="px-4 py-4 sm:px-6 hover:bg-gray-50">
-      <div className="flex items-center justify-between">
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-gray-900 truncate">
-            {vehicle.name}
-          </p>
-          <p className="text-sm text-gray-500 truncate">{vehicle.driver}</p>
-        </div>
-        <div className="flex items-center space-x-4">
-          <select
-            value={vehicle.status}
-            onChange={handleStatusChange}
-            className={`text-sm rounded-full px-3 py-1 ${
-              StatusColors[vehicle.status]
-            }`}
-          >
-            <option value="ACTIVE">Active</option>
-            <option value="INACTIVE">Inactive</option>
-            <option value="MAINTENANCE">Maintenance</option>
-          </select>
-          <button
-            onClick={handleDelete}
-            className="text-red-600 hover:text-red-900"
-          >
-            Delete
-          </button>
-        </div>
+    <li className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center">
+      <div className="flex-1">
+        <h3 className="text-lg font-semibold text-gray-800">{vehicle.name}</h3>
+        <p className="text-sm text-gray-500">Driver: {vehicle.driver}</p>
+        <p className="text-sm text-gray-400">
+          Status updated: {new Date(vehicle.updatedAt).toLocaleDateString()}
+        </p>
+      </div>
+      <div className="flex items-center space-x-4">
+        <select
+          value={vehicle.status}
+          onChange={handleStatusChange}
+          className={`text-sm rounded-md border-gray-300 bg-gray-50 px-4 py-2 focus:ring-2 focus:ring-blue-500 ${
+            StatusColors[vehicle.status] || "text-gray-700"
+          }`}
+        >
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Inactive</option>
+          <option value="MAINTENANCE">Maintenance</option>
+        </select>
+        <button
+          onClick={handleDelete}
+          className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+        >
+          Delete
+        </button>
       </div>
     </li>
   );

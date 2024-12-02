@@ -1,7 +1,7 @@
 import { Car, Hammer, AlertTriangle, Battery } from "lucide-react";
-import { Card } from "../ui/Card";
-import { StatusBadge } from "../ui/StatusBadge";
-import { Button } from "../ui/Button";
+import { Card } from "./Card";
+import { StatusBadge } from "./StatusBadge";
+import { Button } from "./Button";
 
 const statusIcons = {
   Active: Car,

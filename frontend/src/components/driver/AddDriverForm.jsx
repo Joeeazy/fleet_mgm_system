@@ -1,32 +1,41 @@
 import { UserPlus } from "lucide-react";
-import { Card } from "./Card";
-import { Input } from "./Input";
-import { Button } from "./Button";
-import { useDriverStore } from "../../stores/useDriverStore";
+import { Card } from "../ui/Card";
+import { Input } from "../ui/Input";
+import { Button } from "../ui/Button";
 import { useState } from "react";
+import axios from "axios";
 
 export function AddDriverForm({ onAdd }) {
-  const [newDriver, setNewDriver] = useState({
+  const initialDriverState = {
     name: "",
     licenseNumber: "",
     contactNumber: "",
     status: "Active",
-  });
+  };
 
-  const { addDriver, loading } = useDriverStore();
+  const [newDriver, setNewDriver] = useState(initialDriverState);
 
-  const handleSubmit = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewDriver((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const addDriver = async (e) => {
     e.preventDefault();
+
     try {
-      await addDriver(newDriver);
-      setNewDriver({
-        name: "",
-        licenseNumber: "",
-        contactNumber: "",
-        status: "Active",
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/drivers/driver",
+        newDriver
+      );
+      console.log(response.data);
+      onAdd?.(response.data); // Notify parent component if onAdd is provided
+      setNewDriver(initialDriverState); // Reset form after submission
     } catch (error) {
-      console.error("Error creating a new driver:", error.message);
+      console.error("Error adding driver:", error);
     }
   };
 
@@ -35,40 +44,22 @@ export function AddDriverForm({ onAdd }) {
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
         <UserPlus /> Add New Driver
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4 text-gray-950">
+      <form className="space-y-4 text-gray-950" onSubmit={addDriver}>
         <div className="grid gap-4 md:grid-cols-3">
-          <Input
-            name="name"
-            value={newDriver.name}
-            onChange={(e) =>
-              setNewDriver({ ...newDriver, name: e.target.value })
-            }
-            placeholder="Driver Name"
-            required
-          />
-          <Input
-            name="licenseNumber"
-            value={newDriver.licenseNumber}
-            onChange={(e) =>
-              setNewDriver({ ...newDriver, licenseNumber: e.target.value })
-            }
-            placeholder="License Number"
-            required
-          />
-          <Input
-            name="contactNumber"
-            type="tel"
-            value={newDriver.contactNumber}
-            onChange={(e) =>
-              setNewDriver({ ...newDriver, contactNumber: e.target.value })
-            }
-            placeholder="Contact Number"
-            required
-          />
+          {["name", "licenseNumber", "contactNumber"].map((field) => (
+            <Input
+              key={field}
+              name={field}
+              value={newDriver[field]}
+              onChange={handleChange}
+              placeholder={`Enter ${
+                field.charAt(0).toUpperCase() + field.slice(1)
+              }`}
+              required
+            />
+          ))}
         </div>
-        <Button type="submit" disabled={loading}>
-          {loading ? "Adding..." : "Add Driver"}
-        </Button>
+        <Button type="submit">Add Driver</Button>
       </form>
     </Card>
   );

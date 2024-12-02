@@ -10,7 +10,7 @@ import { Feature } from "ol";
 import { Point } from "ol/geom";
 import { fromLonLat } from "ol/proj";
 import { Style, Icon } from "ol/style";
-import { useVehicleStore } from "../../store/useVehicleStore";
+import { useVehicleStore } from "../../stores/useVehicleStore";
 
 const VehicleMap = () => {
   const mapRef = useRef();
