@@ -1,5 +1,5 @@
 import { DriverCard } from "./DriverCard";
-import { fetchAllDrivers } from "../stores/useDriverStore";
+import { fetchAllDrivers } from "../../stores/useDriverStore";
 
 export function DriverList({ drivers, onStatusChange, onDelete }) {
   return (

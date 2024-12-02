@@ -2,7 +2,7 @@ import { UserPlus } from "lucide-react";
 import { Card } from "./Card";
 import { Input } from "./Input";
 import { Button } from "./Button";
-import { useDriverStore } from "../stores/useDriverStore";
+import { useDriverStore } from "../../stores/useDriverStore";
 import { useState } from "react";
 
 export function AddDriverForm({ onAdd }) {

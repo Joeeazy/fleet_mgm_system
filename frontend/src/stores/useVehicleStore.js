@@ -6,6 +6,8 @@ export const useVehicleStore = create((set) => ({
   vehicles: [],
   loading: false,
   error: null,
+  selectedVehicle: null,
+  vehicleLocations: new Map(),
 
   fetchAllVehicles: async () => {
     set({ loading: true, error: null });
@@ -74,4 +76,16 @@ export const useVehicleStore = create((set) => ({
       set({ error: error.message, loading: false });
     }
   },
+
+  setVehicles: (vehicles) => set({ vehicles }),
+
+  setSelectedVehicle: (vehicle) => set({ selectedVehicle: vehicle }),
+
+  updateVehicleLocation: (vehicleId, location) =>
+    set((state) => ({
+      vehicleLocations: new Map(state.vehicleLocations).set(
+        vehicleId,
+        location
+      ),
+    })),
 }));
