@@ -16,7 +16,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="bg-blue-800 min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="bg-yellow-500 min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <motion.div
         className="sm:mx-auto sm:w-full sm:max-w-md"
         initial={{ opacity: 0, y: -20 }}

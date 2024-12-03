@@ -1,66 +1,93 @@
+import React, { useState } from "react";
 import { UserPlus } from "lucide-react";
-import { Card } from "../ui/Card";
-import { Input } from "../ui/Input";
-import { Button } from "../ui/Button";
-import { useState } from "react";
-import axios from "axios";
 
 export function AddDriverForm({ onAdd }) {
   const initialDriverState = {
     name: "",
     licenseNumber: "",
     contactNumber: "",
-    status: "Active",
+    status: "Available",
   };
 
   const [newDriver, setNewDriver] = useState(initialDriverState);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await onAdd(newDriver);
+      setNewDriver(initialDriverState);
+    } catch (error) {
+      console.error("Error in form submission:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewDriver((prevState) => ({
-      ...prevState,
+    setNewDriver((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  const addDriver = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/drivers/driver",
-        newDriver
-      );
-      console.log(response.data);
-      onAdd?.(response.data); // Notify parent component if onAdd is provided
-      setNewDriver(initialDriverState); // Reset form after submission
-    } catch (error) {
-      console.error("Error adding driver:", error);
-    }
-  };
-
   return (
-    <Card className="mb-6">
-      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <UserPlus /> Add New Driver
-      </h2>
-      <form className="space-y-4 text-gray-950" onSubmit={addDriver}>
-        <div className="grid gap-4 md:grid-cols-3">
-          {["name", "licenseNumber", "contactNumber"].map((field) => (
-            <Input
-              key={field}
-              name={field}
-              value={newDriver[field]}
-              onChange={handleChange}
-              placeholder={`Enter ${
-                field.charAt(0).toUpperCase() + field.slice(1)
-              }`}
-              required
-            />
-          ))}
-        </div>
-        <Button type="submit">Add Driver</Button>
-      </form>
-    </Card>
+    <div className="card bg-base-100 shadow-lg text-black">
+      <div className="card-body">
+        <h2 className="card-title flex items-center gap-2">
+          <UserPlus className="text-primary" />
+          Add New Driver
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={newDriver.name}
+                onChange={handleChange}
+                className="input input-bordered"
+                placeholder="Enter driver name"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">License Number</span>
+              </label>
+              <input
+                type="text"
+                name="licenseNumber"
+                value={newDriver.licenseNumber}
+                onChange={handleChange}
+                className="input input-bordered"
+                placeholder="Enter license number"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Contact Number</span>
+              </label>
+              <input
+                type="text"
+                name="contactNumber"
+                value={newDriver.contactNumber}
+                onChange={handleChange}
+                className="input input-bordered"
+                placeholder="Enter contact number"
+                required
+              />
+            </div>
+          </div>
+          <div className="card-actions justify-end">
+            <button type="submit" className="btn btn-primary">
+              Add Driver
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

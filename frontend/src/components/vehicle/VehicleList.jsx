@@ -1,54 +1,73 @@
-import { useState } from "react";
-import axios from "axios";
-import VehicleListItem from "./VehicleListItem";
-import LoadingSpinner from "../ui/LoadingSpinner";
+import React from "react";
+import { Trash2 } from "lucide-react";
 
-const VehicleList = () => {
-  const [vehicles, setVehicles] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const getVehicles = async () => {
-    setLoading(true);
-    setError(""); // Clear previous errors
-    try {
-      const response = await axios.get("/api/vehicles/");
-      setVehicles(response.data);
-    } catch (err) {
-      setError("Failed to fetch vehicles.");
-    } finally {
-      setLoading(false);
-    }
+const VehicleList = ({ vehicles, onDelete, onStatusChange }) => {
+  const statusColors = {
+    Active: "badge-success",
+    Maintenance: "badge-warning",
+    "Out of Service": "badge-error",
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Vehicles</h2>
-        <button
-          onClick={getVehicles}
-          className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Refresh List
-        </button>
-      </div>
-      {loading && (
-        <div className="flex justify-center items-center py-6">
-          <LoadingSpinner />
-        </div>
-      )}
-      {error && (
-        <div className="text-red-600 bg-red-100 p-4 rounded-md">{error}</div>
-      )}
-      <ul className="divide-y divide-gray-200">
-        {vehicles.length > 0
-          ? vehicles.map((vehicle) => (
-              <li key={vehicle.id} className="py-4">
-                <VehicleListItem vehicle={vehicle} />
-              </li>
-            ))
-          : !loading && <p className="text-gray-600">No vehicles found.</p>}
-      </ul>
+    <div className="overflow-x-auto bg-white rounded-lg shadow text-black">
+      <table className="table w-full">
+        <thead>
+          <tr className="bg-base-200">
+            <th>Name/ID</th>
+            <th>Location</th>
+            <th>Fuel Level</th>
+            <th>Next Maintenance</th>
+            <th>Status</th>
+            <th>Assigned Driver</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {vehicles.map((vehicle) => (
+            <tr key={vehicle._id}>
+              <td>{vehicle.name}</td>
+              <td>{vehicle.location}</td>
+              <td>
+                <div className="flex items-center gap-2">
+                  <progress
+                    className="progress progress-primary w-20"
+                    value={vehicle.fuelLevel}
+                    max="100"
+                  />
+                  <span>{vehicle.fuelLevel}%</span>
+                </div>
+              </td>
+              <td>
+                {new Date(vehicle.nextMaintenanceDue).toLocaleDateString()}
+              </td>
+              <td>
+                <select
+                  className={`select select-sm ${statusColors[vehicle.status]}`}
+                  value={vehicle.status}
+                  onChange={(e) => onStatusChange(vehicle._id, e.target.value)}
+                >
+                  <option value="Active">Active</option>
+                  <option value="Maintenance">Maintenance</option>
+                  <option value="Out of Service">Out of Service</option>
+                </select>
+              </td>
+              <td>
+                {vehicle.driver
+                  ? `${vehicle.driver.name} (${vehicle.driver.status})`
+                  : "Unassigned"}
+              </td>
+              <td className="flex gap-2">
+                <button
+                  className="btn btn-sm btn-ghost text-red-500"
+                  onClick={() => onDelete(vehicle._id)}
+                >
+                  <Trash2 size={16} />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

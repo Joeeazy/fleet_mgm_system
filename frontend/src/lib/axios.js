@@ -1,20 +1,26 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
-  baseURL:
-    import.meta.mode === "development" ? "http://localhost:5000/api" : "/api",
+const API_BASE_URL = "http://localhost:5000/api";
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, //send cookies to the server
 });
 
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+export const driverService = {
+  getAll: () => api.get("/drivers"),
+  add: (data) => api.post("/drivers/driver", data),
+  updateStatus: (id, status) => api.patch(`/drivers/${id}/status`, { status }),
+  delete: (id) => api.delete(`/drivers/${id}`),
+};
 
-export default axiosInstance;
+export const vehicleService = {
+  getAll: () => api.get("/vehicles"),
+  add: (data) => api.post("/vehicles/vehicle", data),
+  updateStatus: (id, status) => api.patch(`/vehicles/${id}/status`, { status }),
+  delete: (id) => api.delete(`/vehicles/${id}`),
+};
+
+export default api;
