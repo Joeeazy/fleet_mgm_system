@@ -30,6 +30,7 @@ app.use(cors());
 // Store io instance in app for use in routes
 app.set("io", io);
 
+
 app.use("/api/auth", authRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/drivers", driverRoutes);

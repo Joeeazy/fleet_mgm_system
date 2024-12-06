@@ -9,6 +9,7 @@ import { body } from "express-validator";
 
 const router = express.Router();
 
+
 router.get("/", getDrivers);
 
 router.post(
