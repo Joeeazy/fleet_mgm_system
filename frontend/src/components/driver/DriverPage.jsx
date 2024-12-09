@@ -1,43 +1,3 @@
-// import React from "react";
-// import { useDrivers } from "../../hooks/useDrivers";
-// import { AddDriverForm } from "./AddDriverForm";
-// import DriverList from "./DriverList";
-// import LoadingSpinner from "../ui/LoadingSpinner";
-// import ErrorAlert from "../ui/ErrorAlert";
-// import { Users } from "lucide-react";
-
-// const DriversPage = () => {
-//   const {
-//     drivers,
-//     loading,
-//     error,
-//     addDriver,
-//     updateDriverStatus,
-//     deleteDriver,
-//   } = useDrivers();
-
-//   if (loading) return <LoadingSpinner />;
-//   if (error) return <ErrorAlert message={error} />;
-
-//   return (
-//     <div className="p-6 space-y-6">
-//       <div className="flex items-center gap-3 mb-6">
-//         <Users className="w-8 h-8 text-primary" />
-//         <h1 className="text-2xl font-bold">Driver Management</h1>
-//       </div>
-
-//       <AddDriverForm onAdd={addDriver} />
-
-//       <DriverList
-//         drivers={drivers}
-//         onDelete={deleteDriver}
-//         onStatusChange={updateDriverStatus}
-//       />
-//     </div>
-//   );
-// };
-
-// export default DriversPage;
 import React from "react";
 import { useDrivers } from "../../hooks/useDrivers";
 import { AddDriverForm } from "./AddDriverForm";
@@ -45,6 +5,7 @@ import DriverList from "./DriverList";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import ErrorAlert from "../ui/ErrorAlert";
 import { Users, UserPlus, FileText } from "lucide-react";
+import { exportToExcel } from "../../lib/excelExport";
 
 const DriversPage = () => {
   const {
@@ -55,6 +16,11 @@ const DriversPage = () => {
     updateDriverStatus,
     deleteDriver,
   } = useDrivers();
+
+  const handleExport = () => {
+    const timestamp = new Date().toISOString().split("T")[0];
+    exportToExcel(drivers, `drivers-report-${timestamp}`);
+  };
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorAlert message={error} />;
@@ -73,7 +39,11 @@ const DriversPage = () => {
             </div>
           </div>
           <div className="flex gap-3">
-            <button className="btn btn-outline btn-primary gap-2">
+            <button
+              onClick={handleExport}
+              className="btn btn-outline btn-primary gap-2"
+              title="Export drivers data to Excel"
+            >
               <FileText size={16} />
               Export Report
             </button>
