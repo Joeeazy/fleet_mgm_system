@@ -60,12 +60,15 @@ const Sidebar = () => {
           </li>
         </Link>
 
-        <li>
-          <a className="flex items-center gap-2 hover:bg-primary/10 active:bg-primary/20">
-            <Calendar className="w-5 h-5" />
-            Schedule
-          </a>
-        </li>
+        <Link to="/schedule">
+          <li>
+            <a className="flex items-center gap-2 hover:bg-primary/10 active:bg-primary/20">
+              <Calendar className="w-5 h-5" />
+              Schedule
+            </a>
+          </li>
+        </Link>
+
         <li>
           <a className="flex items-center gap-2 hover:bg-primary/10 active:bg-primary/20">
             <Fuel className="w-5 h-5" />

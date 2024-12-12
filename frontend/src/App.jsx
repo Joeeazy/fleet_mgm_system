@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 import { useUserStore } from "./stores/useUserStore.js";
 import LoadingSpinner from "./components/ui/LoadingSpinner";
 import { useEffect } from "react";
+import SchedulePage from "./pages/SchedulePage";
 
 function App() {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -32,7 +33,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/home" element={<HomePage />} />
-
+            <Route path="/schedule" element={<SchedulePage />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/signup"
