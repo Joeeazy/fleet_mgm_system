@@ -5,7 +5,7 @@ import VehicleList from "./VehicleList";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import ErrorAlert from "../ui/ErrorAlert";
 import { Truck, Plus, FileText, Fuel } from "lucide-react";
-
+import { exportToExcel } from "../../lib/vehicleExcelExport";
 const VehiclesPage = () => {
   const {
     vehicles,
@@ -15,6 +15,11 @@ const VehiclesPage = () => {
     updateVehicleStatus,
     deleteVehicle,
   } = useVehicles();
+
+  const handleExport = () => {
+    const timestamp = new Date().toISOString().split("T")[0];
+    exportToExcel(vehicles, `vehicles-report-${timestamp}`);
+  };
 
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorAlert message={error} />;
@@ -56,7 +61,10 @@ const VehiclesPage = () => {
             </div>
           </div>
           <div className="flex gap-3">
-            <button className="btn btn-outline btn-primary gap-2">
+            <button
+              onClick={handleExport}
+              className="btn btn-outline btn-primary gap-2"
+            >
               <FileText size={16} />
               Export Report
             </button>

@@ -21,7 +21,7 @@ function App() {
   if (checkingAuth) return <LoadingSpinner />;
 
   // Routes where Sidebar should not appear
-  const noSidebarRoutes = ["/signup", "/login", "/"];
+  const noSidebarRoutes = ["/signup", "/login", "/", "/home"];
 
   return (
     <div className="min-h-screen text-white overflow-hidden">
@@ -31,6 +31,8 @@ function App() {
         <div className="w-screen">
           <Routes>
             <Route path="/" element={<LoginPage />} />
+            <Route path="/home" element={<HomePage />} />
+
             <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/signup"

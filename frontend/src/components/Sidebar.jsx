@@ -8,6 +8,7 @@ import {
   FileText,
   AlertTriangle,
   Fuel,
+  BaggageClaim,
   //   Tool
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -28,6 +29,15 @@ const Sidebar = () => {
             <a className="flex items-center gap-2 hover:bg-primary/10 active:bg-primary/20">
               <Home className="w-5 h-5" />
               Dashboard
+            </a>
+          </li>
+        </Link>
+
+        <Link to="vehiclesPage">
+          <li>
+            <a className="flex items-center gap-2 hover:bg-primary/10 active:bg-primary/20">
+              <BaggageClaim className="w-5 h-5" />
+              Orders
             </a>
           </li>
         </Link>

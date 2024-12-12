@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { UserPlus, Mail, Lock, User, ArrowRight, Loader } from "lucide-react";
 import { motion } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
+import { useNavigate } from "react-router-dom";
 
 function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -13,9 +14,12 @@ function SignUpPage() {
   });
 
   const { signup, loading } = useUserStore();
+
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     signup(formData);
+    navigate("/home");
   };
 
   return (
