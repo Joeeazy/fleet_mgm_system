@@ -88,43 +88,14 @@ export const login = async (req, res) => {
   }
 };
 
-// export const login = async (req, res) => {
-//   try {
-//     const {email, password} = req.body;
-
-//     // Check if email exists
-//     const user = await User.findOne({ email });
-//     console.log("User found:", user);
-
-//     if (!user) {
-//       return res.status(400).json({ message: "Invalid email or password" });
-//     }
-
-//     // Compare the password using the comparePassword method
-//     const isPasswordValid = await user.comparePassword(password);
-//     console.log("Password valid:", isPasswordValid);
-
-//     if (!isPasswordValid) {
-//       return res.status(400).json({ message: "Invalid email or password" });
-//     }
-
-//     // Generate JWT token
-//     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-//       expiresIn: "1h",
-//     });
-
-//     res.json({
-//       message: "Login successful",
-//       token,
-//       user: {
-//         _id: user._id,
-//         name: user.name,
-//         email: user.email,
-//         role: user.role,
-//       },
-//     });
-//   } catch (error) {
-//     console.error("Error in login controller:", error.message);
-//     res.status(500).json({ message: "Server error. Please try again later." });
-//   }
-// };
+export const getProfile = async (req, res) => {
+  try {
+    if (!req.User) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(req.User);
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
