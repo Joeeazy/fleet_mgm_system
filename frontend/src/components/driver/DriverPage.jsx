@@ -26,19 +26,21 @@ const DriversPage = () => {
   if (error) return <ErrorAlert message={error} />;
 
   return (
-    <div className="p-6 space-y-6 bg-gradient-to-br from-base-100 to-base-200 min-h-screen">
+    <div className="p-6 sm:p-4 space-y-6 bg-gradient-to-br from-base-100 to-base-200 min-h-screen">
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-8 mb-6">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-lg">
               <Users className="w-8 h-8 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold">Driver Management</h1>
-              <p className="text-gray-600">Manage your fleet drivers</p>
+              <h1 className="text-2xl sm:text-3xl font-bold">Driver Management</h1>
+              <p className="text-gray-600 text-sm sm:text-base">
+                Manage your fleet drivers
+              </p>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <button
               onClick={handleExport}
               className="btn btn-outline btn-primary gap-2"
@@ -68,3 +70,4 @@ const DriversPage = () => {
 };
 
 export default DriversPage;
+

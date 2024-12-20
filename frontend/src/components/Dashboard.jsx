@@ -1,13 +1,15 @@
 import React from "react";
 import { Activity, Battery, MapPin, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+
 const Dashboard = () => {
   return (
-    <div className="p-6 space-y-6 bg-white text-black">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Roadrims Logistics Dashboard</h2>
-
-        <div className="flex gap-4">
+    <div className="p-6 sm:p-4 space-y-6 bg-white text-black">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8">
+        <h2 className="text-2xl sm:text-3xl font-bold">Roadrims Logistics Dashboard</h2>
+        
+        <div className="flex flex-col sm:flex-row gap-4">
           <Link to="/addvehicle">
             <button className="btn bg-primary hover:bg-primary/80 text-primary-content border-none">
               Add Vehicle
@@ -20,7 +22,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="stats shadow bg-white border border-base-200">
           <div className="stat text-black">
             <div className="stat-figure text-primary">
@@ -66,7 +69,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Activity and Maintenance Schedule Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Recent Activity Card */}
         <div className="card bg-white border border-base-200">
           <div className="card-body">
             <h3 className="card-title text-primary">Recent Activity</h3>
@@ -117,6 +122,7 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Maintenance Schedule Card */}
         <div className="card bg-white border border-base-200">
           <div className="card-body">
             <h3 className="card-title text-primary">Maintenance Schedule</h3>
@@ -172,3 +178,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
