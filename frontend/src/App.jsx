@@ -3,7 +3,7 @@ import DriversPage from "./components/driver/DriverPage";
 import VehiclesPage from "./components/vehicle/VehiclePage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
+import SignUpPage from "./pages/SignupPage";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./components/Dashboard";
 import { useUserStore } from "./stores/useUserStore.js";

@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div className="p-6 space-y-6 bg-white text-black">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">RoadRims Logistics Dashboard</h2>
+        <h2 className="text-2xl font-bold">Roadrims Logistics Dashboard</h2>
 
         <div className="flex gap-4">
           <Link to="/addvehicle">
