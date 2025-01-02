@@ -104,13 +104,13 @@ function SignUpPage() {
       </div>
 
       {/* Right Side - Banner Image */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="hidden sm:block sm:w-1/2 bg-cover bg-center"
         style={{ backgroundImage: `url(${bannerimg})` }}
-      ></motion.div>
+      ></motion.div> */}
     </div>
   );
 }

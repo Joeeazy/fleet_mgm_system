@@ -137,14 +137,14 @@ function LoginPage() {
         </motion.div>
       </div>
 
-      {/* Left-side banner */}
+      {/* Left-side banner
       <motion.div
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2 }}
         className="hidden lg:block lg:w-1/2 bg-cover bg-center"
         style={{ backgroundImage: `url(${loginimg})` }}
-      ></motion.div>
+      ></motion.div> */}
     </div>
   );
 }
